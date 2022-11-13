@@ -90,8 +90,7 @@ function romanize($num)
 
 if ($request == 'stats')
 {
-
-    $data = _getJSON('https://api.mozambiquehe.re/bridge?version=4&platform=' . $machine . '&player=' . $player . '&auth=' . $apikey);
+    $data = _getJSON('https://api.mozambiquehe.re/bridge?&auth=' . $apikey '&player=' . $player . '&platform=' . $machine);
 
     // Total Apex Kills
     $kills = intval($data['total']['kills']['value']);
