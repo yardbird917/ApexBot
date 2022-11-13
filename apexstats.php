@@ -1,46 +1,6 @@
 <?php
 header('Content-type: text/plain');
 
-$apikey = '46cf15635e393ef08e5fcd7719a6a2df';
-
-$request = strtolower($_GET['command']);
-if (!$request)
-{
-    echo '\'&command=\' parameter not defined! (Options: \'rank\', \'stats\')';
-    return;
-};
-
-$platform = strtolower($_GET['platform']);
-if (!in_array($platform, array(
-    'origin',
-    'xbl',
-    'psn'
-)))
-{
-    echo '\'&platform=\' parameter not correct! (Options: \'xbl\', \'psn\' or \'origin\')';
-    return;
-};
-
-if ($platform == 'origin')
-{
-    $machine = 'PC';
-};
-if ($platform == 'xbl')
-{
-    $machine = 'X1';
-};
-if ($platform == 'psn')
-{
-    $machine = 'PS4';
-};
-
-$player = $_GET['nick'];
-if (!$player)
-{
-    echo '\'&nick=\' parameter not defined!';
-    return;
-};
-
 function _getJSON($url)
 {
     $ch = curl_init();
@@ -88,36 +48,18 @@ function romanize($num)
     return $result; 
 }; 
 
-if ($request == 'stats')
-{
-    $data = _getJSON('https://api.mozambiquehe.re/bridge?&auth=' . $apikey '&player=' . $player . '&platform=' . $machine);
+$apikey = '46cf15635e393ef08e5fcd7719a6a2df';
+$machine = 'PC';
+$nick = 'shJazz_ttv';
 
-    // Total Apex Kills
-    $kills = intval($data['total']['kills']['value']);
-    // Total Apex Dmg
-    $dmg = intval($data['total']['damage']['value']);
-    // Total Apex Games Played
-    $games_played = intval($data['total']['games_played']['value']);
-    // Current Apex Level
-    $lvl = intval($data['global']['level']);
-    // Kill/Death Ratio
-    $adr = round($dmg / $games_played, 2);
-
-    echo "$player Stats: Lv. " . $lvl . " | Lifetime Kills: " . $kills . " | Lifetime Damage: " . $dmg . " | Games Played: " . $games_played . " | ADR: " . $adr . " ";
-};
-
-if ($request == 'rank')
-{
-   	$data = _getJSON('https://api.mozambiquehe.re/bridge?&auth=' . $apikey '&player=' . $player . '&platform=' . $machine);
+$data = _getJSON('https://api.mozambiquehe.re/bridge?&auth=46cf15635e393ef08e5fcd7719a6a2df&player=shJazz_ttv&platform=PC');
      
-	$rdiv = intval($data['global']['rank']['rankDiv']);
+$rdiv = intval($data['global']['rank']['rankDiv']);
 	 
-   	$rank = _getJSON('https://api.mozambiquehe.re/bridge?&auth=' . $apikey '&player=' . $player . '&platform=' . $machine);
+$rank = _getJSON('https://api.mozambiquehe.re/bridge?&auth=46cf15635e393ef08e5fcd7719a6a2df&player=shJazz_ttv&platform=PC');
         
-        echo " $player Apex Rank: " . $rank['global']['rank']['rankName'] . " " . romanize($rdiv) .  " 「" . $rank['global']['rank']['rankScore'] . "ᴿᴾ」";
+echo " $player Apex Rank: " . $rank['global']['rank']['rankName'] . " " . romanize($rdiv) .  " 「" . $rank['global']['rank']['rankScore'] . "ᴿᴾ」";
 
     // More Explained Rank info output
     // echo "Apex Rank: ".$result['global']['rank']['rankName']." ".$result['global']['rank']['rankDiv']." ";
-    // echo "Score: ".$result['global']['rank']['rankScore'];
-    
-};
+    // echo "Score: ".$result['global']['rank']['rankScore']
