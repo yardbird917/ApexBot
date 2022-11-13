@@ -1,7 +1,7 @@
 <?php
 header('Content-type: text/plain');
 
-$apikey = '';
+$apikey = '46cf15635e393ef08e5fcd7719a6a2df';
 
 $request = strtolower($_GET['command']);
 if (!$request)
