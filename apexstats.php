@@ -70,7 +70,7 @@ function romanize($num)
  
     // Declare a lookup array that we will use to traverse the number: 
     $lookup = array(
-        'IV' => 4, 'III' => 3, 'II' => 2, 'I' => 1
+        'IV' => 'IV', 'III' => 'III', 'II' => 'II', 'I' => 'I'
     ); 
  
     foreach ($lookup as $roman => $value)  
@@ -108,11 +108,11 @@ if ($request == 'stats')
 
 if ($request == 'rank')
 {
-	$data = _getJSON('https://api.mozambiquehe.re/bridge?version=4&platform=' . $machine . '&player=' . $player . '&auth=' . $apikey);
+   	$data = _getJSON('https://api.mozambiquehe.re/bridge?&auth=' . $apikey '&player=' . $player . '&platform=' . $machine);
      
 	$rdiv = intval($data['global']['rank']['rankDiv']);
 	 
-        $rank = _getJSON('https://api.mozambiquehe.re/bridge?version=4&platform=' . $machine . '&player=' . $player . '&auth=' . $apikey);
+   	$rank = _getJSON('https://api.mozambiquehe.re/bridge?&auth=' . $apikey '&player=' . $player . '&platform=' . $machine);
         
         echo " $player Apex Rank: " . $rank['global']['rank']['rankName'] . " " . romanize($rdiv) .  " 「" . $rank['global']['rank']['rankScore'] . "ᴿᴾ」";
 
